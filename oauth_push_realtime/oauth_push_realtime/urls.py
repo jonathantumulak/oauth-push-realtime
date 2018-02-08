@@ -13,11 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout
 
-from .views import HomeView, FeedView
+from .views import HomeView, FeedView, ServiceWorkerView, SaveTokenView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,8 +28,14 @@ urlpatterns = [
 
     url(r'^feed/', FeedView.as_view(), name='feed'),
 
+    url(r'^save-token/', SaveTokenView.as_view(), name='save-token'),
+
     # social django urls
     url('', include('social_django.urls', namespace='social')),
 
     url(r'^auth/session/logout/$', logout, name='logout'),
-]
+
+    url(r'^firebase-messaging-sw.js$',
+        ServiceWorkerView.as_view(),
+        name='service-worker-notification'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

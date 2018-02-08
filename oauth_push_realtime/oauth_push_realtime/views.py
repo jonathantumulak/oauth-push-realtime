@@ -4,6 +4,12 @@ from __future__ import unicode_literals
 from django.http import Http404
 from django.views.generic import TemplateView
 
+from django.http import HttpResponse
+from django.views.generic import View
+from django.template import loader, Context
+
+from oauth_push_realtime.models import UserToken
+
 
 class LoginRequiredMixin(object):
     """ Mixin for Resources that are only accessible for logged in users """
@@ -27,3 +33,22 @@ class FeedView(LoginRequiredMixin, TemplateView):
         ctx = super(FeedView, self).get_context_data(**kwargs)
         ctx['user'] = self.request.user
         return ctx
+
+
+class ServiceWorkerView(View):
+    """View to serve service worker js"""
+
+    def get(self, request, *args, **kwargs):
+        javascript = loader.get_template('oauth_push_realtime/firebase-messaging-sw.js')
+        response = HttpResponse(javascript.render({}))
+        response['Content-Type'] = 'application/javascript'
+        return response
+
+
+class SaveTokenView(View):
+
+    def post(self, request, *args, **kwargs):
+        token = self.request.POST.get('token', None)
+        if token:
+            UserToken.objects.create(owner=self.request.user, token=token)
+        return HttpResponse()
