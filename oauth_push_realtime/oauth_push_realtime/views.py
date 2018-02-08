@@ -34,6 +34,9 @@ class FeedView(LoginRequiredMixin, TemplateView):
         ctx['user'] = self.request.user
         return ctx
 
+    def post(self, request, *args, **kwargs):
+        pass
+
 
 class ServiceWorkerView(View):
     """View to serve service worker js"""
