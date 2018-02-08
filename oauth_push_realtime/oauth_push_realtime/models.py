@@ -1,8 +1,7 @@
-from __future__ import unicode_literals
-
-
+from django.contrib.auth.models import User
 from django.db import models
 
 
-class TweetModel(models.Model):
-    text = models.CharField(max_length=255)
+class UserToken(models.Model):
+    owner = models.ForeignKey(User, related_name='keys')
+    token = models.CharField(max_length=255)
