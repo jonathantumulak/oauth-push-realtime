@@ -1,4 +1,4 @@
 ##HOW TO RUN CELERY
 ```
-celery -A oauth_push_realtime worker -l info
+python manage.py celeryd --loglevel=DEBUG  -E -B -c 1
 ```
