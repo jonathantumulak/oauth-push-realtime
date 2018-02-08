@@ -6,7 +6,7 @@
     </head>
     <body>
         <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand">Navbar</a>
+            <a class="navbar-brand">Oauth Push Realtime</a>
             {% if request.user.is_authenticated %}
                 <div>Welcome! {{ request.user.username }}</div>
                 <a href="{% url "logout" %}">Logout</a>

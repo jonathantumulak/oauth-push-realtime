@@ -1,11 +1,11 @@
-amqp==2.2.2
-billiard==3.5.0.3
-celery==4.1.0
+amqp==1.4.9
+billiard==3.3.0.23
+celery==3.1.25
 certifi==2018.1.18
 chardet==3.0.4
 Django==1.11.10
 idna==2.6
-kombu==4.1.0
+kombu==3.0.37
 oauthlib==2.0.6
 PyJWT==1.5.3
 python-openid==2.2.5
