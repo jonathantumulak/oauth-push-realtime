@@ -52,6 +52,7 @@ class SaveTokenView(View):
 
     def post(self, request, *args, **kwargs):
         token = self.request.POST.get('token', None)
-        if token:
+        if token and not UserToken.objects.filter(
+                owner=self.request.user, token=token).exists():
             UserToken.objects.create(owner=self.request.user, token=token)
         return HttpResponse()
