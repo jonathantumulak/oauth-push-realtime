@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import djcelery
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,6 +42,9 @@ INSTALLED_APPS = [
     'oauth_push_realtime',
 
     'social_django',
+    # celery
+    'djcelery',
+    'kombu.transport.django',
 ]
 
 MIDDLEWARE = [
@@ -157,6 +161,13 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 SOCIAL_AUTH_USER_FIELDS = ['username', 'email', 'first_name', 'last_name']
 
 SOCIAL_AUTH_PASSWORDLESS = False
+
+# celery config
+# Setup celery module
+djcelery.setup_loader()
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+BROKER_URL = 'django://'
 
 
 try:
