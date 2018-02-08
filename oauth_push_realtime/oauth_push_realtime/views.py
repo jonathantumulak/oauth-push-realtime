@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import json
+
 from django.http import Http404
 from django.views.generic import TemplateView
+from django.http import HttpResponse
+
+
+from tweepy.streaming import StreamListener
+from tweepy import OAuthHandler
+from tweepy import Stream
+
+from tweet.models import Tweet
 
 
 class LoginRequiredMixin(object):
@@ -27,3 +37,28 @@ class FeedView(LoginRequiredMixin, TemplateView):
         ctx = super(FeedView, self).get_context_data(**kwargs)
         ctx['user'] = self.request.user
         return ctx
+
+
+class StdOutListener(StreamListener):
+
+    def on_data(self, data):
+        loaded = json.loads(data)
+        # for item in loaded:
+        #     print item
+            # Tweet.objects.create(text=item.get('text'))
+        return True
+
+    def on_error(self, status):
+        print status
+        return False
+
+
+def post(request):
+    l = StdOutListener()
+    auth = OAuthHandler('S0Mk4LKsTKEhikMHC0UStwon2', 'THCs5s2VCF6dq3nFmKgpJMXnyPULMcJknii8oYZTPT9CjOvkf7')
+    auth.set_access_token('761121725283115009-ty24nOmtLgYx1cwl3TfGQ9ImoVkgARu', 'AjQPqW0Lw26m8wHMTTGCxSj9kAi9NoaZZfrSBWXXDTQBC')
+    stream = Stream(auth, l)
+
+    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
+    stream.filter(track=['python', 'javascript', 'ruby'])
+    return HttpResponse(status=201)

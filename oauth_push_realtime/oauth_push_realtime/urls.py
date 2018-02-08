@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import logout
 
-from .views import HomeView, FeedView
+from .views import HomeView, FeedView, post
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
 
     url(r'^feed/', FeedView.as_view(), name='feed'),
+
+    url(r'^feed_post/', post, name='post'),
 
     # social django urls
     url('', include('social_django.urls', namespace='social')),
