@@ -36,17 +36,6 @@ class HomeView(TemplateView):
     template_name = 'oauth_push_realtime/home.html'
 
 
-class FeedView(LoginRequiredMixin, TemplateView):
-    template_name = 'oauth_push_realtime/feed.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(FeedView, self).get_context_data(**kwargs)
-        ctx['user'] = self.request.user
-        return ctx
-
-    def post(self, request, *args, **kwargs):
-        pass
-
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
@@ -59,6 +48,24 @@ class StdOutListener(StreamListener):
     def on_error(self, status):
         print status
         return False
+
+
+class FeedView(LoginRequiredMixin, TemplateView):
+    template_name = 'oauth_push_realtime/feed.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(FeedView, self).get_context_data(**kwargs)
+        ctx['user'] = self.request.user
+        return ctx
+
+    def post(self, request, *args, **kwargs):
+        load = StdOutListener()
+        auth = OAuthHandler('S0Mk4LKsTKEhikMHC0UStwon2', 'THCs5s2VCF6dq3nFmKgpJMXnyPULMcJknii8oYZTPT9CjOvkf7')
+        auth.set_access_token('761121725283115009-ty24nOmtLgYx1cwl3TfGQ9ImoVkgARu', 'AjQPqW0Lw26m8wHMTTGCxSj9kAi9NoaZZfrSBWXXDTQBC')
+        stream = Stream(auth, load)
+
+        #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
+        stream.filter(track=request.POST.get['keywords'])
 
 
 def post(request):
