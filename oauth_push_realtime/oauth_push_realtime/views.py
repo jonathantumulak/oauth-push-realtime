@@ -67,18 +67,6 @@ class FeedView(LoginRequiredMixin, TemplateView):
         #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
         stream.filter(track=request.POST.get['keywords'])
 
-
-def post(request):
-    l = StdOutListener()
-    auth = OAuthHandler('S0Mk4LKsTKEhikMHC0UStwon2', 'THCs5s2VCF6dq3nFmKgpJMXnyPULMcJknii8oYZTPT9CjOvkf7')
-    auth.set_access_token('761121725283115009-ty24nOmtLgYx1cwl3TfGQ9ImoVkgARu', 'AjQPqW0Lw26m8wHMTTGCxSj9kAi9NoaZZfrSBWXXDTQBC')
-    stream = Stream(auth, l)
-
-    #This line filter Twitter Streams to capture data by the keywords: 'python', 'javascript', 'ruby'
-    stream.filter(track=['python', 'javascript', 'ruby'])
-    return HttpResponse(status=201)
-
-
 class ServiceWorkerView(View):
     """View to serve service worker js"""
 

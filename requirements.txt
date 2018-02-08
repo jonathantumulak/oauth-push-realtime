@@ -10,7 +10,6 @@ Django==1.11.10
 django-bootstrap3==9.1.0
 django-celery==3.2.2
 django-jsonview==0.4.3
--e git+https://github.com/michaelbrooks/django-twitter-stream.git@0b44f5e273b84ff93a2023ef504b334fe201232c#egg=django_twitter_stream
 enum34==1.1.6
 future==0.16.0
 idna==2.6
@@ -35,7 +34,6 @@ simplegeneric==0.8.1
 six==1.11.0
 social-auth-app-django==2.1.0
 social-auth-core==1.6.0
-South==1.0.2
 swapper==0.1.1
 traitlets==4.3.2
 tweepy==3.5.0
