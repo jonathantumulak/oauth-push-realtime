@@ -6,7 +6,7 @@ celery==3.1.25
 certifi==2018.1.18
 chardet==3.0.4
 decorator==4.2.1
-Django==1.11.10
+Django==1.11.28
 django-bootstrap3==9.1.0
 django-celery==3.2.2
 django-jsonview==0.4.3
